@@ -1,0 +1,62 @@
+# --- OS & System ---
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+*.tmp
+*.bak
+*.swp
+*.swo
+*~
+
+# --- IDE & Editors ---
+# JetBrains
+.idea/
+*.iml
+*.ipr
+*.iws
+# VS Code
+.vscode/
+*.code-workspace
+# Eclipse
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+*.sublime-workspace
+*.sublime-project
+
+# --- Logs ---
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+logs/
+backend/logs/
+
+# --- Backend (Java/Maven) ---
+target/
+*.class
+*.jar
+*.war
+*.ear
+# Wrapper jar (optional, based on previous config)
+backend/.mvn/wrapper/maven-wrapper.jar
+# Spring
+help.md
+
+# --- Frontend (Node/Vite) ---
+node_modules/
+dist/
+.vite/
+.eslintcache
+coverage/
+*.tsbuildinfo
+
+# --- Environment Variables ---
+.env
+.env.*
+!.env.example
