@@ -15,7 +15,7 @@ public class User {
     private String username;
     private String password;
     private String role; // ADMIN, VIP, USER
-    private String avatar;
+    private byte[] avatar;
     private String signature;
     private String tags; // Comma separated tags
     private LocalDateTime createTime;

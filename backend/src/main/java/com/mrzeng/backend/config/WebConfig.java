@@ -18,6 +18,11 @@ public class WebConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/user/login", "/user/register"); // Exclude public routes
     }
 
+    @Override
+    public void addResourceHandlers(org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/images/**").addResourceLocations("file:./uploads/");
+    }
+
     public class LoginInterceptor implements HandlerInterceptor {
         @Override
         public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {

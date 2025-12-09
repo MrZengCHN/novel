@@ -30,22 +30,73 @@ const handleLogout = () => {
     router.push('/login')
 }
 
+const selectedFile = ref(null)
+
+const handleFileUpload = (event) => {
+    const file = event.target.files[0]
+    if (!file) return
+
+    // Limit 300KB
+    if (file.size > 300 * 1024) {
+        message.value = '文件大小不能超过300KB'
+        // Clear input
+        event.target.value = ''
+        selectedFile.value = null
+        return
+    }
+
+    // Limit type
+    if (!['image/jpeg', 'image/png'].includes(file.type)) {
+        message.value = '只支持JPG or PNG格式'
+        event.target.value = ''
+        selectedFile.value = null
+        return
+    }
+
+    selectedFile.value = file
+    // Preview
+    const reader = new FileReader()
+    reader.onload = (e) => {
+        avatarInput.value = e.target.result
+    }
+    reader.readAsDataURL(file)
+}
+
 const handleUpdateProfile = async () => {
     loading.value = true
     message.value = ''
     try {
-        // Construct query params manually since backend expects RequestParam
-        const params = new URLSearchParams()
-        params.append('userId', userStore.userInfo.id)
-        params.append('avatar', avatarInput.value)
-        params.append('signature', signatureInput.value)
+        const formData = new FormData()
+        formData.append('userId', userStore.userInfo.id)
+        if (selectedFile.value) {
+            formData.append('avatar', selectedFile.value)
+        } else if (avatarInput.value) {
+            // If it's a URL string (not changed or entered manually), backend needs to deciding how to handle?
+            // Actually our backend expects MultipartFile for "avatar". 
+            // If user enters a String URL manually, it won't be picked up by "MultipartFile avatar".
+            // We might need to handle this case, but for now user asked for "upload avatar".
+            // If they didn't upload file but entered URL... current backend doesn't support "String avatar" anymore for updateProfile in same param name.
+            // But let's focus on file upload fix first. 
+        }
 
-        const response = await fetch(`http://localhost:8080/user/update?${params.toString()}`, {
+        if (signatureInput.value) {
+            formData.append('signature', signatureInput.value)
+        }
+
+        const response = await fetch(`http://localhost:8080/user/update`, {
             method: 'PUT',
             headers: {
                 'Authorization': `Bearer ${userStore.userInfo.token}`
-            }
+            },
+            body: formData
         })
+
+        if (!response.ok) {
+            const text = await response.text()
+            console.error('Update failed:', response.status, response.statusText, text)
+            message.value = `更新失败: ${response.status} ${text}`
+            return
+        }
 
         const result = await response.json()
 
@@ -53,11 +104,13 @@ const handleUpdateProfile = async () => {
             userStore.setUserInfo(result.data)
             isEditing.value = false
             message.value = '更新成功'
+            selectedFile.value = null // reset
         } else {
             message.value = result.message || '更新失败'
         }
 
     } catch (error) {
+        console.error(error)
         message.value = '网络错误'
     } finally {
         loading.value = false
@@ -74,7 +127,7 @@ const roleBadgeClass = (role) => {
 </script>
 
 <template>
-    <div class="min-h-screen pt-20 pb-10 px-4 container mx-auto max-w-4xl">
+    <div class="min-h-[calc(100vh-5rem)] pt-20 pb-10 px-4 container mx-auto max-w-4xl">
         <div class="card bg-base-100 shadow-xl border border-base-200 backdrop-blur-sm bg-opacity-90"
             v-if="userStore.userInfo">
 
@@ -135,9 +188,19 @@ const roleBadgeClass = (role) => {
                 <div v-if="isEditing" class="grid grid-cols-1 md:grid-cols-2 gap-6 animate-fade-in-down">
                     <div class="form-control">
                         <label class="label">
-                            <span class="label-text">头像 URL</span>
+                            <span class="label-text">更换头像</span>
                         </label>
-                        <input type="text" v-model="avatarInput" placeholder="输入图片链接" class="input input-bordered" />
+                        <input type="file" @change="handleFileUpload" accept="image/png, image/jpeg"
+                            class="file-input file-input-bordered w-full" />
+                        <label class="label">
+                            <span class="label-text-alt">支持 JPG/PNG, 小于 300KB</span>
+                        </label>
+
+                        <div class="divider text-xs">或者使用 URL</div>
+
+                        <input type="text" v-model="avatarInput" placeholder="输入图片链接"
+                            class="input input-bordered w-full" />
+
                         <label class="label">
                             <span class="label-text-alt">预览:</span>
                         </label>

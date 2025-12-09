@@ -4,7 +4,8 @@ CREATE TABLE IF NOT EXISTS t_user (
     username VARCHAR(50) NOT NULL UNIQUE,
     password VARCHAR(100) NOT NULL,
     role VARCHAR(20) DEFAULT 'USER',
-    avatar VARCHAR(255),
+    avatar BYTEA,
+    -- Changed to BYTEA for binary storage
     signature VARCHAR(500),
     tags VARCHAR(255),
     create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

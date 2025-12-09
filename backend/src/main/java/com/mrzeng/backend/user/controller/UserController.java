@@ -7,6 +7,7 @@ import com.mrzeng.backend.user.dto.UserVO;
 import com.mrzeng.backend.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/user")
@@ -36,9 +37,11 @@ public class UserController {
         }
     }
 
+
+
     @PutMapping("/update")
     public Result<UserVO> updateProfile(@RequestParam Long userId,
-                                      @RequestParam(required = false) String avatar,
+                                      @RequestParam(required = false) MultipartFile avatar,
                                       @RequestParam(required = false) String signature) {
         try {
             UserVO userVO = userService.updateProfile(userId, avatar, signature);
