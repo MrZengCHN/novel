@@ -2,6 +2,7 @@
 import ThemeSelect from '@/components/ThemeSelect.vue'
 import { gloableStore } from '@/stores/gloableStore'
 import { useUserStore } from '@/stores/userStore'
+import defaultAvatar from '@/assets/default-avatar.jpg'
 
 const store = gloableStore()
 const userStore = useUserStore()
@@ -58,8 +59,7 @@ const userStore = useUserStore()
           <div class="dropdown dropdown-end">
             <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
               <div class="w-10 rounded-full">
-                <img
-                  :src="userStore.userInfo.avatar || 'https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg'" />
+                <img :src="userStore.userInfo.avatar || defaultAvatar" />
               </div>
             </div>
             <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">

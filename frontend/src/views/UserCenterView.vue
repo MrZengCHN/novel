@@ -2,6 +2,7 @@
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/userStore'
+import defaultAvatar from '@/assets/default-avatar.jpg'
 
 const router = useRouter()
 const userStore = useUserStore()
@@ -71,12 +72,7 @@ const handleUpdateProfile = async () => {
         if (selectedFile.value) {
             formData.append('avatar', selectedFile.value)
         } else if (avatarInput.value) {
-            // If it's a URL string (not changed or entered manually), backend needs to deciding how to handle?
-            // Actually our backend expects MultipartFile for "avatar". 
-            // If user enters a String URL manually, it won't be picked up by "MultipartFile avatar".
-            // We might need to handle this case, but for now user asked for "upload avatar".
-            // If they didn't upload file but entered URL... current backend doesn't support "String avatar" anymore for updateProfile in same param name.
-            // But let's focus on file upload fix first. 
+            // Optional: Handle manual URL input if backend supports it
         }
 
         if (signatureInput.value) {
@@ -144,8 +140,7 @@ const roleBadgeClass = (role) => {
                 <div class="flex flex-col md:flex-row gap-6 items-start">
                     <div class="avatar online">
                         <div class="w-32 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 bg-base-100">
-                            <img
-                                :src="userStore.userInfo.avatar || 'https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg'" />
+                            <img :src="userStore.userInfo.avatar || defaultAvatar" />
                         </div>
                     </div>
 
@@ -206,8 +201,7 @@ const roleBadgeClass = (role) => {
                         </label>
                         <div class="avatar">
                             <div class="w-16 rounded">
-                                <img
-                                    :src="avatarInput || 'https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg'" />
+                                <img :src="avatarInput || defaultAvatar" />
                             </div>
                         </div>
                     </div>
