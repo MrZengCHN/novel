@@ -8,7 +8,7 @@ export const gloableStore = defineStore('gloableStore', () => {
         localStorage.setItem('theme', theme)
     }
 
-    const isMusicPlayerVisible = ref(true)
+    const isMusicPlayerVisible = ref(false)
     function setMusicPlayerVisibility(visible) {
         isMusicPlayerVisible.value = visible
     }

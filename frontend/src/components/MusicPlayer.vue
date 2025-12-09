@@ -116,12 +116,12 @@ onMounted(() => {
     <div
       class="card w-80 bg-base-100/70 backdrop-blur-md shadow-xl border border-base-200 overflow-visible transition-all duration-300 hover:bg-base-100/90 relative group">
       <!-- Hide Button -->
-      <button
-        class="btn btn-ghost btn-xs btn-circle absolute -top-2 -right-2 z-50 bg-base-100 shadow-sm opacity-0 group-hover:opacity-100 transition-opacity"
-        @click="store.setMusicPlayerVisibility(false)" title="Hide Player">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-        </svg>
+      class="btn btn-ghost btn-xs btn-circle absolute -top-2 -right-2 z-50 bg-base-100 shadow-sm opacity-0
+      group-hover:opacity-100 transition-opacity"
+      @click="store.setMusicPlayerVisibility(false)" title="隐藏播放器">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+      </svg>
       </button>
 
       <div class="card-body p-4">
@@ -140,10 +140,10 @@ onMounted(() => {
           </div>
           <div class="overflow-hidden w-full">
             <div class="whitespace-nowrap font-bold text-sm truncate">
-              {{ playlist.length > 0 ? (currentTrack?.title || 'Select a Track') : 'No Music Found' }}
+              {{ playlist.length > 0 ? (currentTrack?.title || '选择歌曲') : '未找到音乐' }}
             </div>
             <div class="text-xs opacity-60">
-              {{ playlist.length > 0 ? 'Music Player' : 'Add mp3 to src/assets/music' }}
+              {{ playlist.length > 0 ? '音乐播放器' : '请添加MP3到 src/assets/music' }}
             </div>
           </div>
         </div>
