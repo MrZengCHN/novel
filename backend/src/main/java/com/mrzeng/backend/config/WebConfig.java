@@ -21,7 +21,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/user/login", "/user/register"); // Exclude public routes
 
         registry.addInterceptor(new AdminInterceptor(userMapper))
-                .addPathPatterns("/game/**"); // Game routes protection strategy inside interceptor
+                .addPathPatterns("/game/**", "/chat/mute", "/chat/unmute"); // Game and Chat Admin routes protection
     }
 
     @Override

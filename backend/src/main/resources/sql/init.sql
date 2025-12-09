@@ -26,3 +26,11 @@ CREATE TABLE IF NOT EXISTS t_game (
     create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     update_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+-- Create Mute Table
+CREATE TABLE IF NOT EXISTS t_mute (
+    id bigserial PRIMARY KEY,
+    user_id BIGINT NOT NULL,
+    channel_id VARCHAR(50) NOT NULL,
+    create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    expire_time TIMESTAMP
+);
