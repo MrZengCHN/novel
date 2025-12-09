@@ -1,8 +1,10 @@
 <script setup>
 import ThemeSelect from '@/components/ThemeSelect.vue'
 import { gloableStore } from '@/stores/gloableStore'
+import { useUserStore } from '@/stores/userStore'
 
 const store = gloableStore()
+const userStore = useUserStore()
 </script>
 
 <template>
@@ -49,6 +51,28 @@ const store = gloableStore()
               d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
           </svg>
         </button>
+        <template v-if="!userStore.userInfo">
+          <RouterLink to="/login" class="btn btn-primary btn-sm">登录</RouterLink>
+        </template>
+        <template v-else>
+          <div class="dropdown dropdown-end">
+            <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+              <div class="w-10 rounded-full">
+                <img
+                  :src="userStore.userInfo.avatar || 'https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg'" />
+              </div>
+            </div>
+            <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+              <li>
+                <RouterLink to="/user" class="justify-between">
+                  个人中心
+                  <span class="badge" v-if="userStore.userInfo.role === 'VIP'">VIP</span>
+                </RouterLink>
+              </li>
+              <li><a @click="userStore.logout(); $router.push('/login')">退出登录</a></li>
+            </ul>
+          </div>
+        </template>
         <ThemeSelect />
       </div>
     </div>

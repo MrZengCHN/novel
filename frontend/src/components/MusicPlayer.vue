@@ -116,12 +116,12 @@ onMounted(() => {
     <div
       class="card w-80 bg-base-100/70 backdrop-blur-md shadow-xl border border-base-200 overflow-visible transition-all duration-300 hover:bg-base-100/90 relative group">
       <!-- Hide Button -->
-      class="btn btn-ghost btn-xs btn-circle absolute -top-2 -right-2 z-50 bg-base-100 shadow-sm opacity-0
-      group-hover:opacity-100 transition-opacity"
-      @click="store.setMusicPlayerVisibility(false)" title="隐藏播放器">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-      </svg>
+      <button
+        class="btn btn-ghost btn-xs btn-circle absolute -top-2 -right-2 z-50 bg-base-100 shadow-sm opacity-0 group-hover:opacity-100 transition-opacity"
+        @click="store.setMusicPlayerVisibility(false)" title="隐藏播放器">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg>
       </button>
 
       <div class="card-body p-4">
