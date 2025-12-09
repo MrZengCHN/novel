@@ -13,3 +13,16 @@ CREATE TABLE IF NOT EXISTS t_user (
 );
 -- Insert Admin User (Optional)
 -- INSERT INTO t_user (username, password, role, create_time, update_time) VALUES ('admin', 'admin', 'ADMIN', NOW(), NOW());
+-- Create Game Table
+CREATE TABLE IF NOT EXISTS t_game (
+    id bigserial PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    cover BYTEA,
+    description TEXT,
+    tags VARCHAR(255),
+    chatroom_link VARCHAR(255),
+    lobby_link VARCHAR(255),
+    status INT DEFAULT 1,
+    create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    update_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

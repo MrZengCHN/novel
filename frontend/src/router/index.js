@@ -32,6 +32,28 @@ const router = createRouter({
       name: 'user',
       component: () => import('../views/UserCenterView.vue'),
     },
+    {
+      path: '/admin/home-manage',
+      name: 'home-manage',
+      component: () => import('../views/HomeManageView.vue'),
+      beforeEnter: (to, from, next) => {
+        const { useUserStore } = import('@/stores/userStore').then(m => m)
+        // Dynamic import logic inside guard is tricky for pinia outside component?
+        // Actually, we can import useUserStore at top level if pinia is installed.
+        // But better: use dynamic import or just standard import.
+        // Let's use standard import at top.
+        // But wait, Pinia store must be used after Pinia is installed. Router is installed before app mount?
+        // Yes, but route guard executes when route is visited (app is mounted).
+        import('@/stores/userStore').then(({ useUserStore }) => {
+          const userStore = useUserStore()
+          if (userStore.userInfo && userStore.userInfo.role === 'ADMIN') {
+            next()
+          } else {
+            next('/')
+          }
+        })
+      }
+    },
   ],
 })
 

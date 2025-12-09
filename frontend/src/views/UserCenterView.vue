@@ -167,10 +167,15 @@ const roleBadgeClass = (role) => {
                         </div>
                     </div>
 
-                    <div class="pt-14">
+                    <div class="pt-14 space-x-2">
                         <button class="btn btn-outline btn-primary" v-if="!isEditing"
                             @click="isEditing = true">编辑资料</button>
-                        <div class="flex gap-2" v-else>
+
+                        <!-- Admin Entry -->
+                        <button class="btn btn-secondary" v-if="userStore.userInfo.role === 'ADMIN'"
+                            @click="$router.push('/admin/home-manage')">管理首页</button>
+
+                        <div class="flex gap-2" v-else-if="isEditing">
                             <button class="btn btn-primary" @click="handleUpdateProfile" :disabled="loading">保存</button>
                             <button class="btn btn-ghost" @click="isEditing = false">取消</button>
                         </div>
